@@ -22,9 +22,17 @@ export const typeDefs = `#graphql
   type Mutation {
     addPost(post: AddPostInput!): Post
     deletePost(id: ID!): [Post]
+    editPost(id:ID!, edit:EditPostInput): Post
   }
+
   input AddPostInput {
     title: String!
     body: String!
   }
+
+  input EditPostInput {
+    title: String!
+    body: String!
+  }
+
 `;
