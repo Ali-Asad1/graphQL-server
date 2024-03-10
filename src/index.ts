@@ -46,6 +46,17 @@ const server = new ApolloServer({
       deletePost(_, args) {
         return db.posts.filter((post) => post.id !== args.id);
       },
+      editPost(_, args) {
+        db.posts = db.posts.map((post) => {
+          if (post.id === args.id) {
+            return { ...post, ...args.edit };
+          }
+
+          return post;
+        });
+
+        return db.posts.find((post) => post.id === args.id);
+      },
     },
   },
 });
