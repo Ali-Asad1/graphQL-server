@@ -3,11 +3,13 @@ export const typeDefs = `#graphql
     id: ID!
     title:  String!
     body: String!
+    author: Author!
   }
 
   type Author {
     id: ID!
     username: String!
+    posts:[Post!]!
   }
 
   type Query {
