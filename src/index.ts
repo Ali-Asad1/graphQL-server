@@ -3,6 +3,7 @@ import { startStandaloneServer } from "@apollo/server/standalone";
 
 import { typeDefs } from "./schema/schema.js";
 import db from "../database/_db.js";
+import { randomUUID } from "crypto";
 
 const server = new ApolloServer({
   typeDefs,
@@ -31,6 +32,21 @@ const server = new ApolloServer({
         return db.posts.filter((post) => post.author_id === parent.id);
       },
     },
+    Mutation: {
+      addPost(_, args) {
+        let post = {
+          ...args.post,
+          id: randomUUID(),
+        };
+
+        db.posts.push(post);
+
+        return post;
+      },
+      deletePost(_, args) {
+        return db.posts.filter((post) => post.id !== args.id);
+      },
+    },
   },
 });
 
@@ -40,4 +56,5 @@ const { url } = await startStandaloneServer(server, {
   },
 });
 
+console.log(randomUUID());
 console.log("server run on port 3002");
