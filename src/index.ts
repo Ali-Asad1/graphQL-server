@@ -21,6 +21,16 @@ const server = new ApolloServer({
         return db.authors.find((author) => author.id === args.id);
       },
     },
+    Post: {
+      author(parent) {
+        return db.authors.find((author) => parent.author_id === author.id);
+      },
+    },
+    Author: {
+      posts(parent) {
+        return db.posts.filter((post) => post.author_id === parent.id);
+      },
+    },
   },
 });
 
